@@ -1,7 +1,7 @@
 
 #include "second.h"
 
-int thresh_for_sobel_detect_contour = 30;
+int thresh_for_sobel_detect_contour = 20;
 
 
 int main(int argc, char** argv)
@@ -25,10 +25,10 @@ int main(int argc, char** argv)
 		cout << files[i].c_str() << endl;
 		record << files[i].c_str() << endl;
 		Mat grad = Mat::zeros(src.size(), CV_8UC1);;
-		namedWindow("source", CV_WINDOW_AUTOSIZE);
+		//namedWindow("source", CV_WINDOW_AUTOSIZE);
 
 		GaussianBlur(src, src, Size(3, 3), 0, 0, BORDER_DEFAULT);
-		imshow("source", src);
+		//imshow("source", src);
 		
 		double result = calculate_scores(src, grad);
 		
@@ -37,7 +37,8 @@ int main(int argc, char** argv)
 
 	}
 	record.close();
-	waitKey(0);
+	system("python Demo.py");
+	getchar();
 	return 0;
 
 }
@@ -100,8 +101,8 @@ double calculate_scores(Mat Image, Mat grad)
 	convertScaleAbs(grad_y, abs_grad_y);
 	/// Total Gradient (approximate)
 	addWeighted(abs_grad_x, 0.5, abs_grad_y, 0.5, 0, grad);
-	namedWindow("sobel", CV_WINDOW_AUTOSIZE);
-	imshow("sobel", grad);
+	//namedWindow("sobel", CV_WINDOW_AUTOSIZE);
+	//imshow("sobel", grad);
 	double count = 0;
 	for (int j = 0; j < nl; j++)//y
 	{
